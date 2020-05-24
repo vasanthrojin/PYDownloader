@@ -9,7 +9,7 @@ pip install -r requirements.txt
 ```
 This should install all the required Python libraries.
 
-# Installing ffmpeg
+# Installing ffmpeg [For Mac, Ubuntu and Linux]
 Installing ffmpeg is required. Write the following in your shell:
 ```
 brew install ffmpeg
