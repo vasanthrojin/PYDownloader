@@ -25,15 +25,34 @@ for res in quality:
     count += 1
 quality_choice = quality[int(input('Choice: '))-1]
 print('Downloading ...')
+
+cdw = os.getcwd()
+os. chdir("outputs/audio/")
+cdo = os.getcwd()
 prev_list = os.listdir()
-streams.filter(only_video=True, resolution=quality_choice).first().download()
-streams.filter(only_audio=True).first().download('audio')
+os.chdir(cdw)
+
+streams.filter(only_video=True, resolution=quality_choice).first().download("outputs/video")
+streams.filter(only_audio=True).first().download('outputs/audio')
 fileIt = 'Youtube'
+
+
+os. chdir(cdo)
+
+
 for file in os.listdir():
     if file not in prev_list:
         fileIt = file
-os.system("ffmpeg -i '"+os.getcwd()+'/'+fileIt+"' -i "+os.getcwd()+"'/audio/"+fileIt+"' -c:v copy -c:a aac output.mp4")
-print('Done dana done!')
-os.remove(fileIt)
+
+os. chdir(cdw+"/outputs")
+print('Merging video and audio .....')
+combine = 'ffmpeg -i "'+os.getcwd()+'/video/'+fileIt+'" -i "'+os.getcwd()+'/audio/'+fileIt +'"'+ " -c:v copy -c:a aac output.mp4"
+
+os.system(combine)
+print('video and audio Merging complete')
+print("\n deleting temporary files")
+
+os.remove("video/"+fileIt)
 os.remove('audio/'+fileIt)
 os.rename(r'output.mp4', fileIt)
+print("deletion complete")
